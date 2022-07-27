@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*,com.sist.dao.*"%>
 <%
-	String no=request.getParameter("no"); //getParameter로 무조건 값을 받는다
+String no=request.getParameter("no"); //getParameter로 무조건 값을 받는다
 	FoodDAO dao=new FoodDAO();
-	FoodVO vo=dao.foodDetailData(Integer.parseInt(no));
+	FoodDAO vo=dao.foodDetailData(Integer.parseInt(no));
 
 	String address=vo.getAddress();
 	String addr1=vo.getAddress().substring(0,address.lastIndexOf("지"));
 	String addr2=address.substring(address.lastIndexOf("번")+1);
 	/*
 		API
-			서울특별시 영등포구 당산로 180 신우빌딩 1F 지번 서울시 영등포구 당산동4가 31-2 선우빌딩 1F
-			----------------------------------  -------------------------------------
-						1										2
+	서울특별시 영등포구 당산로 180 신우빌딩 1F 지번 서울시 영등포구 당산동4가 31-2 선우빌딩 1F
+	----------------------------------  -------------------------------------
+				1										2
 	*/
 %>
     <%--

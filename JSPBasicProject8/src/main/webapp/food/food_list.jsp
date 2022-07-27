@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*,com.sist.dao.*"%>
 <%
-	//1. 데이터 받기 ==> 검색어 , 페이지 받기
+//1. 데이터 받기 ==> 검색어 , 페이지 받기
 	request.setCharacterEncoding("UTF-8");
 	String fd=request.getParameter("fd");
 	String strPage=request.getParameter("page");
@@ -15,8 +15,8 @@
 	int curpage=Integer.parseInt(strPage);
 	// 결과값 읽기
 	FoodDAO dao=new FoodDAO();
-	List<FoodVO> list=dao.foodListData(fd, curpage);
-	for(FoodVO vo:list)
+	List<FoodDAO> list=dao.foodListData(fd, curpage);
+	for(FoodDAO vo:list)
 	{
 		String poster=vo.getPoster();
 		poster=poster.substring(0,poster.indexOf("^")); 
@@ -30,19 +30,19 @@
 	}
 	int totalpage=dao.foodTotalPage(fd); // 검색어별로 페이지가 나눠진다 
 	
-	List<FoodVO>  cList=new ArrayList<FoodVO>();
+	List<FoodDAO>  cList=new ArrayList<FoodDAO>();
 	Cookie[] cookies=request.getCookies(); //request : 사용자 response : 서버 라고 생각하기!!
 	// 쿠키
 	/*
 		1. 생성 부분
-			new Cookie(키,값); => 값 9문자열로만 저장이 가능
-			setPath()  :  쿠키가 저장된 경로 지정
-			setMaxAge() : 쿠키 저장 기간
-			 ==> client에 쿠키 전송 ------ response.addCookie()
+	new Cookie(키,값); => 값 9문자열로만 저장이 가능
+	setPath()  :  쿠키가 저장된 경로 지정
+	setMaxAge() : 쿠키 저장 기간
+	 ==> client에 쿠키 전송 ------ response.addCookie()
 		2. 쿠키 읽기
-			Cookie[] cookies=request.getCookies();
-			 getName() => key를 읽어 온다
-			 getValue() => 값을 읽어 온다 
+	Cookie[] cookies=request.getCookies();
+	 getName() => key를 읽어 온다
+	 getValue() => 값을 읽어 온다 
 		3. 쿠키 삭제 
 		 	setMaxAge(0) ---> 저장 기간을 0을 주면 삭제가 된다.
 		 	
@@ -53,12 +53,12 @@
 	{
 		for(int i=cookies.length-1;i>=0;i--) //최신꺼를 맨앞으로 가져와야되기때문에
 		{
-			if(cookies[i].getName().startsWith("f"))
-			{
-				String no=cookies[i].getValue();
-				FoodVO vo=dao.foodDetailData(Integer.parseInt(no));
-				cList.add(vo); //cList으로 목록 출력 가능..?
-			}
+	if(cookies[i].getName().startsWith("f"))
+	{
+		String no=cookies[i].getValue();
+		FoodDAO vo=dao.foodDetailData(Integer.parseInt(no));
+		cList.add(vo); //cList으로 목록 출력 가능..?
+	}
 		}
 	}
 %>
@@ -109,10 +109,8 @@
 		<div class="row">
 			<div class="food_list">
 			<%
-				for(FoodVO vo:list)
-				{
-					
-				
+			for(FoodDAO vo:list)
+					{
 			%>
 			<!--
 				response => 전송
@@ -121,12 +119,12 @@
 						 -------------- 한개의 JSP에서는 두개를 동시 전송이 불가능  
 			  -->
 				<a class="food" href="detail_before.jsp?no=<%=vo.getFno()%>">
-					<img src="<%=vo.getPoster() %>" style="width:230px; height:150px">
-					<div class="food_name"><%=vo.getName() %>&nbsp;<span style="color:orange"><%=vo.getScore() %></span></div>
-					<div class="food_name"><%=vo.getType() %>-<%=vo.getAddress() %></div>
+					<img src="<%=vo.getPoster()%>" style="width:230px; height:150px">
+					<div class="food_name"><%=vo.getName()%>&nbsp;<span style="color:orange"><%=vo.getScore()%></span></div>
+					<div class="food_name"><%=vo.getType()%>-<%=vo.getAddress()%></div>
 				</a>
-				<% 
-					}
+				<%
+				}
 				%>
 			</div>
 		</div>
@@ -134,12 +132,12 @@
 		 
 			<div style="text-align: center">
 			<%
-				for(int i=1;i<=totalpage;i++)
-				{
+			for(int i=1;i<=totalpage;i++)
+					{
 			%>
-					[<a href="food_list.jsp?page=<%=i%>&fd=<%=fd%>"><%=i %></a>]
-			<% 
-				}
+					[<a href="food_list.jsp?page=<%=i%>&fd=<%=fd%>"><%=i%></a>]
+			<%
+			}
 			%>	
 		  </div>
 		  <%--
@@ -168,11 +166,11 @@
 		  <hr>
 		  <div>
 		  	<%
-		  		int k=0;
-		  		for(FoodVO vo:cList)
-		  		{
-		  			if(k>9) break;
-		  		%>			<!--쿠키누르면 곧장 상세보기로!  -->
+		  	int k=0;
+		  			  		for(FoodDAO vo:cList)
+		  			  		{
+		  			  			if(k>9) break;
+		  	%>			<!--쿠키누르면 곧장 상세보기로!  -->
 		  			<a href="food_detail.jsp?no=<%=vo.getFno()%>"><img src="<%=vo.getPoster().substring(0,vo.getPoster().indexOf("^")) %>" 
 		  				width=100 height="100"></a>
 		  		<% 
