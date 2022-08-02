@@ -3,12 +3,19 @@
  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
  <configuration>
-   <typeAliases>
+   <typeAliases> <!-- :매칭할 mapper의 sql 태그의 type(parameter Type)을 alias로 설정 
+   																   ======  v
+   																ex) rownum as num
+   																   			 -->
      <!-- VO 등록  -->
      <typeAlias type="com.sist.vo.FoodCategoryVO" alias="FoodCategoryVO"/>
      <typeAlias type="com.sist.vo.FoodVO" alias="FoodVO"/>
+     <typeAlias type="com.sist.vo.SeoulLNSVO" alias="SeoulLNSVO"/>
+     <typeAlias type="com.sist.vo.SeoulHGVO" alias="SeoulHGVO"/>
    </typeAliases>
-   <environments default="development">
+  	 <!-- DB 연동  -->
+  	 <!-- environments : DB 연결 설정  -->
+   <environments default="development"> 
       <environment id="development">
         <transactionManager type="JDBC"/><!-- AutoCommit -->
         <dataSource type="POOLED">
@@ -19,7 +26,10 @@
         </dataSource>
       </environment>
    </environments>
+   <!-- mappers : mapper.xml 파일 연결
+   		 ==> mapper.xml 경로를 resource로 연결 -->
    <mappers>
      <mapper resource="com/sist/mapper/food-mapper.xml"/>
+     <mapper resource="com/sist/mapper/seoul-mapper.xml"/>
    </mappers>
  </configuration>

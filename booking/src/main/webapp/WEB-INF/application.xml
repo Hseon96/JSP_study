@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<component-scan base-package="com.sist.model"/>
+</beans>
+<!-- 스프링부트 component-scan의 개념과 동작과정
+
+	1. 빈(VO)으로 등록될 준비를 마친 클래스들을 스캔하여, 빈으로 등록하는것!
+					         ======(@Controller, @Service, @Component, @Repository @Configuration붙인 클래스들)
+	
+	2. component를 scan할 시작 지점을 설정 (base-package)
+		=> model을 시작 지점 설정! (@Controller)있을꺼임..
+		     |             ========== 1. controller는 model을 통해 데이터를 가져온다
+			 |
+			 ㄴ> 어플리케이션이 무엇을 할 것인지 정의한다! 
+			 *	 = (데이터저장소) DB와 연동하여 사용자가 입력,출력할 데이터를 다룬다.
+			 *	 = 클라이언트의 요청을 받으면 해당 요청에 대한 실제 업무를 수행하는 Model, 모델을 호출할 때 전달하기 쉽게 적절히 가공한다.
+				    		 = 여러 개의 데이터 변경 작업(ex. 추가, 변경, 삭제)를 
+				    		   하나의 작업으로 묶은 트랜잭션을 다루는 일도 한다.
+			
+	3. Controller 역할
+		  => Model이 데이터를 어떻게 처리할지 알려주는 역할이다. 		
+		  
+		   = 사용자가 접근한 URL에 따라 사용자의 요청사항을 파악한 후에 
+		     그 요청에 맞는 데이터를 Model을 의뢰하고, 
+		     데이터를 View에 반영해서 사용자에게 알려줍니다.
+		     
+		  => 사용자의 입력 처리와 흐름 제어 담당. 화면과 Model과 View를 연결시켜주는 역할
+		  
+	4. MVC 구조!
+	
+	클라이언트 ====> Controller =====> Model ======>  DB
+			요청	  (Servlet)	<===  (Beans)  <===	 (데이터 저장소)
+				  	  |
+			응답  	  |
+			<===	View
+				  	(JSP)
+ -->
